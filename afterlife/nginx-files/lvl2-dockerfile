@@ -1,0 +1,6 @@
+FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY index.html .
+COPY ./styles ./styles
+ADD assets.tar.gz .
+EXPOSE 80
