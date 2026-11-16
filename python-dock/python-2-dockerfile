@@ -1,0 +1,32 @@
+FROM python:3.12-slim
+WORKDIR /app
+ARG app_version=1.0
+ENV app_name=python-app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN useradd -m apiuser
+COPY --chown=apiuser:apiuser app.py .
+USER apiuser
+HEALTHCHECK --interval=30s \
+--timeout=5s \
+--start-period=10s \
+--retries=5 \
+CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" 
+EXPOSE 5000
+CMD ["python3","app.py"] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
